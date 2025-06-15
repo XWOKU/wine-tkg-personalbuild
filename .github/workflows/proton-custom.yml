@@ -1,4 +1,4 @@
-name: Proton nopackage Arch Linux NTSYNC CI
+name: Proton-tkg with my custom settings
 
 on:
   schedule:
