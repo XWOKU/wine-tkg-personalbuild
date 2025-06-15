@@ -1,4 +1,4 @@
-name: Wine Fedora CI
+name: Wine-tkg with my custom settings
 
 on:
   schedule:
