@@ -2,7 +2,7 @@ name: Proton-tkg with my custom settings
 
 on:
   schedule:
-    - cron: '0 21 * * *' # Every 0:00 in UTC+3
+    - cron: "0 0 * * *"
   workflow_dispatch:
 
 jobs:
