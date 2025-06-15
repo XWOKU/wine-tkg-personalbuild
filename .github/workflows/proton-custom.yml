@@ -56,4 +56,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: proton-tkg-build
-          path: proton-tkg/built/*.tar
+          path: wine-tkg/proton-tkg/built/*.tar
