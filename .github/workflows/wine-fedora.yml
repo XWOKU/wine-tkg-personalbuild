@@ -1,0 +1,44 @@
+name: Wine Fedora CI
+
+on:
+  schedule:
+    - cron:  '25 9,21 * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: fedora:latest
+    steps:
+
+      - uses: actions/checkout@v4
+
+      - name: Clone wine-git
+        run: |
+          git clone https://github.com/Frogging-Family/wine-tkg-git.git wine-tkg
+
+      - name: Compilation
+        run: |
+          sudo dnf -y -q upgrade --refresh
+          sudo dnf -y -q install kernel-headers
+          cd wine-tkg/wine-tkg-git 
+          sed -i 's/_NOLIB32="false"/_NOLIB32="wow64"/' wine-tkg-profiles/advanced-customization.cfg
+          echo '_ci_build="true"' >> customization.cfg
+          sed -i 's/LOCAL_PRESET=\"\"/LOCAL_PRESET=\"none\"/' customization.cfg
+          sed -i 's/_use_ntsync=\"false\"/_use_ntsync=\"true\"/' customization.cfg
+          sed -i 's/_use_esync=\"true\"/_use_esync=\"false\"/' customization.cfg
+          sed -i 's/_use_fsync=\"true\"/_use_fsync=\"false\"/' customization.cfg
+          sed -i 's/_proton_battleye_support=\"true\"/_proton_battleye_support=\"false\"/' customization.cfg
+          sed -i 's/_proton_eac_support=\"true\"/_proton_eac_support=\"false\"/' customization.cfg
+          sed -i 's/_mk11_fix=\"true\"/_mk11_fix=\"false\"/' customization.cfg
+          sed -i 's/_FS_bypass_compositor=\"false\"/_FS_bypass_compositor=\"true\"/' customization.cfg
+          sed -i 's/_proton_fs_hack=\"false\"/_proton_fs_hack=\"true\"/' customization.cfg
+          sed -i 's/_protonify=\"false\"/_protonify=\"true\"/' customization.cfg
+          sed -i 's/_win10_default=\"false\"/_win10_default=\"true\"/' customization.cfg
+          touch tarplz
+          yes|./non-makepkg-build.sh
+      - name: Archive the artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: wine-tkg-build
+          path: wine-tkg/wine-tkg-git/non-makepkg-builds
