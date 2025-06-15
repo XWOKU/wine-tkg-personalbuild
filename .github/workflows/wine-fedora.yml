@@ -13,14 +13,17 @@ jobs:
 
       - uses: actions/checkout@v4
 
+      - name: Prepare
+        run: |
+          sudo dnf -y -q upgrade --refresh
+          sudo dnf -y -q install kernel-headers git
+
       - name: Clone wine-git
         run: |
           git clone https://github.com/Frogging-Family/wine-tkg-git.git wine-tkg
 
       - name: Compilation
         run: |
-          sudo dnf -y -q upgrade --refresh
-          sudo dnf -y -q install kernel-headers
           cd wine-tkg/wine-tkg-git 
           sed -i 's/_NOLIB32="false"/_NOLIB32="wow64"/' wine-tkg-profiles/advanced-customization.cfg
           echo '_ci_build="true"' >> customization.cfg
