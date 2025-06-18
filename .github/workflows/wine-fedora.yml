@@ -22,6 +22,10 @@ jobs:
         run: |
           git clone https://github.com/Frogging-Family/wine-tkg-git.git wine-tkg
 
+      - name: Copy patches
+        run: |
+          cp patches/* wine-tkg/wine-tkg-git/wine-tkg-userpatches
+
       - name: Compilation
         run: |
           cd wine-tkg/wine-tkg-git 
@@ -38,6 +42,7 @@ jobs:
           sed -i 's/_proton_fs_hack=\"false\"/_proton_fs_hack=\"true\"/' customization.cfg
           sed -i 's/_protonify=\"false\"/_protonify=\"true\"/' customization.cfg
           sed -i 's/_win10_default=\"false\"/_win10_default=\"true\"/' customization.cfg
+          sed -i 's/_user_patches_no_confirm=\"false\"/_user_patches_no_confirm=\"true\"/' wine-tkg-profiles/advanced-customization.cfg
           touch tarplz
           yes|./non-makepkg-build.sh
       - name: Archive the artifacts
