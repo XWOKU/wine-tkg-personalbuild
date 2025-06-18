@@ -16,7 +16,7 @@ jobs:
       - name: Prepare
         run: |
           sudo dnf -y -q upgrade --refresh
-          sudo dnf -y -q install kernel-headers git
+          sudo dnf -y -q install kernel-headers git clang-tools-extra clang llvm llvm-devel clang-devel
 
       - name: Clone wine-git
         run: |
