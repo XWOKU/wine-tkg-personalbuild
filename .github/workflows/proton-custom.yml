@@ -30,8 +30,7 @@ jobs:
 
       - name: Copy patches
         run: |
-          cd patches/ && for FILENAME in *.mypatch; do mv $FILENAME $FILENAME.myprotonpatch; done && cd ..
-          cp patches/*.myprotonpatch wine-tkg/proton-tkg/proton-tkg-userpatches
+          cp patches/*.mypatch wine-tkg/proton-tkg/proton-tkg-userpatches
           ls -la wine-tkg/proton-tkg/proton-tkg-userpatches
 
       - name: Compile Proton-TKG
