@@ -28,6 +28,11 @@ jobs:
         run: |
           git clone https://github.com/Frogging-Family/wine-tkg-git.git wine-tkg
 
+      - name: Copy patches
+        run: |
+          cp patches/*.mypatch wine-tkg/wine-tkg-git/wine-tkg-userpatches
+          ls -la wine-tkg/wine-tkg-git/wine-tkg-userpatches
+
       - name: Compile Proton-TKG
         run: |
           chown -R user:user $PWD
@@ -48,6 +53,7 @@ jobs:
             sed -i 's/_assettocorsa_hudperf_fix=\"true\"/_assettocorsa_hudperf_fix=\"false\"/' proton-tkg.cfg
             sed -i 's/_quake_champions_fix=\"true\"/_quake_champions_fix=\"false\"/' proton-tkg.cfg
             sed -i 's/_shared_gpu_resources=\"false\"/_shared_gpu_resources=\"true\"/' proton-tkg.cfg
+            sed -i 's/_user_patches_no_confirm=\"false\"/_user_patches_no_confirm=\"true\"/' proton-tkg.cfg
             touch tarplz
             yes | ./proton-tkg.sh
           "
