@@ -30,8 +30,8 @@ jobs:
 
       - name: Copy patches
         run: |
-          cp patches/*.mypatch wine-tkg/proton-tkg/proton-tkg-userpatches
-          ls -la wine-tkg/proton-tkg/proton-tkg-userpatches
+          cp patches/*.mypatch wine-tkg/wine-tkg-git/wine-tkg-userpatches
+          ls -la wine-tkg/wine-tkg-git/wine-tkg-userpatches
 
       - name: Compile Proton-TKG
         run: |
